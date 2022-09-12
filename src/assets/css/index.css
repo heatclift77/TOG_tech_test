@@ -197,3 +197,18 @@ li{
     color: white;
 }
 
+.btn-create{
+    background: #F3C244;
+    color: #5E5E5E;
+    padding: 4px 16px;
+    border: none;
+    border-radius: 8px;
+}
+
+.btn-close-custom{
+    background: #5E5E5E;
+    color: white;
+    padding: 4px 16px;
+    border: none;
+    border-radius: 8px;
+}

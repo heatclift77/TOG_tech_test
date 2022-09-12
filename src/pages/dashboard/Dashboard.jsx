@@ -3,10 +3,77 @@ import { ContextConsumer } from '../../context/Context'
 import { Component } from 'react'
 
 class Dashboard extends Component{
+    state = {
+        form: {
+            no: '99',
+            destination: '',
+            transportation: 'Pesawat',
+            class: 'Busines'
+        }
+    }
+
     render(){
         return(
             <div>
                <Components.MainLayout>
+                    <div className="modal fade" id="exampleModal" tabIndex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div className="modal-dialog">
+                        <div className="modal-content">
+                        <div className="modal-header">
+                            <h5 className="modal-title" id="exampleModalLabel">Create Data</h5>
+                            <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div className="modal-body">
+                            <form>
+                            <div className="mb-3">
+                                <label htmlFor="recipient-name" className="col-form-label">Destination:</label>
+                                <input type="text" className="form-control" id="recipient-name" onChange={(e) => { 
+                                    this.setState({  
+                                        ...this.state, 
+                                        form : { 
+                                            ...this.state.form, 
+                                            destination: e.target.value  
+                                        } }) }} />
+                            </div>
+                            <div className="mb-3">
+                                <label htmlFor="message-text" className="col-form-label">Transportation:</label>
+                                <select name="" id="" className="form-control" onChange={(e) => { 
+                                    this.setState({  
+                                        ...this.state, 
+                                        form : { 
+                                            ...this.state.form, 
+                                            transportation: e.target.value  
+                                        } }) }}>
+                                    <option value="Pesawat">Pesawat</option>
+                                    <option value="Travel">Travel</option>
+                                    <option value="Kereta">Kereta</option>
+                                </select>
+                            </div>
+                            <div className="mb-3">
+                                <label htmlFor="message-text" className="col-form-label">Class:</label>
+                                <select name="" id="" className="form-control" onChange={(e) => { 
+                                    this.setState({  
+                                        ...this.state, 
+                                        form : { 
+                                            ...this.state.form, 
+                                            class: e.target.value  
+                                        } }) }}>
+                                    <option value="Busines">Busines</option>
+                                    <option value="Ekonomi">Ekonomi</option>
+                                </select>
+                            </div>
+                            </form>
+                        </div>
+                        <div className="modal-footer">
+                            <button type="button" className="btn-close-custom" data-bs-dismiss="modal">Close</button>
+                            <button type="button" className="btn-create" onClick={() => { 
+                                this.props.state.table.row.add(this.state.form).draw(false)
+                                this.props.dispatch('SET_PAGE_INFO', this.props.state.table.page.info())
+                             }}>Send message</button>
+                        </div>
+                        </div>
+                    </div>
+                    </div>
                     <h3>Dashboard</h3>
                     <div className='d-flex justify-content-between align-items-center'>
                         <div className="d-flex">
@@ -17,15 +84,18 @@ class Dashboard extends Component{
                                 <Components.Button_expand />
                             </div>
                         </div>
-                        <div className="d-flex">
+                        <div className="d-flex align-items-center">
                             <div className='mr-3 me-3'>
                                 <Components.ButtonActionCircle type={'file_download'} />
                             </div>
                             <div className='mr-3 me-3'>
                                 <Components.ButtonActionCircle type={'printer'} />
                             </div>
-                            <div>
+                            <div className='mr-3 me-3'>
                                 <Components.ButtonActionCircle type={'delete'} onClick={() => { this.props.state.table.rows( { selected: true } ).remove().draw() }} />
+                            </div>
+                            <div>
+                                <button className='btn-create' data-bs-toggle="modal" data-bs-target="#exampleModal" data-bs-whatever="@mdo">Create New</button>
                             </div>
                         </div>
                     </div>
@@ -39,7 +109,6 @@ class Dashboard extends Component{
                                     <select name="status" id="status" className='custom_input_field px-3 py-2' onChange={(e) => { 
                                         this.props.state.table.search(e.target.value).draw() 
                                         this.props.dispatch('SET_PAGE_INFO', this.props.state.table.page.info())
-                                        console.log(e.target.value)
                                     }}>
                                         <option value="Busines">Busines</option>
                                         <option value="Ekonomi">Ekonomi</option>

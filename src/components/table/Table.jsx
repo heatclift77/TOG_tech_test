@@ -13,26 +13,26 @@ const tb_properties =  {
             data: 'no',
         },
         {
-            data: 'name',
+            data: 'destination',
         },
         {
-            data: 'description',
+            data: 'transportation',
         },
         {
-            data: 'status',
+            data: 'class',
         }
     ],
     destroy: true,
-    order: [[ 1, 'asc' ]],
-    // columnDefs: [ {
-    //     orderable: false,
-    //     className: 'select-checkbox',
-    //     targets:   0
-    // } ],
-    
+    order: [[ 1, 'asc' ]],    
     select: {
         items: 'row'
     },
+    columnDefs: [ {
+        targets: 3,
+        createdCell: function (td, cellData, rowData, row, col) {
+          return(<td>1</td>)
+        }
+      } ]
 }
 
 
